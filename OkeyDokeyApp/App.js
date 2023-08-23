@@ -4,29 +4,23 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import Home from './src/screens/Home';
 import Favorite from './src/screens/Favorite';
 import Payment from './src/screens/Payment';
 import Setting from './src/screens/Home';
-
 import Login from './src/screens/Login';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Camera from './src/screens/Camera';
 
-const iconNames = {
-  Home: 'home',
-  Favorite: 'heart',
-  Payment: 'payment',
-  Setting: 'settings',
-};
-const tabBarLabels = {
-  Home: '홈',
-  Favorite: '즐겨찾기',
-  Payment: '결제',
-  Setting: '설정',
-};
+//redux
+import {Provider} from 'react-redux';
+import {store} from './src/redux/store';
+import {useSelector} from 'react-redux';
+
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const BottomTabScreen = () => {
@@ -77,6 +71,7 @@ const App = () => {
         ) : (
           <>
             <Stack.Screen name="Bottom" component={BottomTabScreen} />
+            <Stack.Screen name="Camera" component={Camera} />
           </>
         )}
       </Stack.Navigator>
@@ -84,4 +79,21 @@ const App = () => {
   );
 };
 
-export default App;
+export default () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+const iconNames = {
+  Home: 'home',
+  Favorite: 'heart',
+  Payment: 'payment',
+  Setting: 'settings',
+};
+const tabBarLabels = {
+  Home: '홈',
+  Favorite: '즐겨찾기',
+  Payment: '결제',
+  Setting: '설정',
+};
