@@ -13,12 +13,16 @@ import axios from 'axios';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {useSelector} from 'react-redux';
 
 const CameraScreen = ({state}) => {
   const navigation = useNavigation();
   const camera = useRef(null);
   const devices = useCameraDevices();
   const device = devices.front;
+
+  const accessToken = useSelector(state => state.user.access_token);
+  const userNickname = useSelector(state => state.user.nickname);
 
   const [showCamera, setShowCamera] = useState(false);
   const [imageSource, setImageSource] = useState(null);
@@ -66,20 +70,35 @@ const CameraScreen = ({state}) => {
       };
       body.append('image', photo);
 
-      await axios.post('http://3.36.63.88/account/user/face/register/', body, {
-        headers: {'Content-Type': 'multipart/form-data'},
-      });
+      await axios.post(
+        'http://43.202.59.85/account/user/face/register/',
+        body,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          //헤더에 어세스 토큰 추가
+        },
+      );
 
       console.log('🥹 image upload complete!');
       setShowSuccessMessage(true);
       // 2초 후에 메시지 숨기기 및 Home 화면으로 이동
       setTimeout(() => {
         setShowSuccessMessage(false);
-        navigation.navigate('Favorite');
+        navigation.navigate('Home');
       }, 2000);
     } catch (error) {
       console.log('😛 Error :', error);
       console.log('😛 Error :', error.message);
+
+      // setShowSuccessMessage(true);
+      // // 2초 후에 메시지 숨기기 및 Home 화면으로 이동
+      // setTimeout(() => {
+      //   setShowSuccessMessage(false);
+      //   navigation.navigate('Home');
+      // }, 2000);
     }
   };
 
@@ -99,7 +118,7 @@ const CameraScreen = ({state}) => {
               alignItems: 'center',
             }}>
             <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-              김땡땡님의 얼굴을 등록합니다
+              {userNickname ? userNickname : '익명'}님의 얼굴을 등록합니다
             </Text>
           </View>
           <View style={{position: 'relative', width: '100%', height: '80%'}}>
@@ -271,9 +290,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 40,
-    //ADD backgroundColor COLOR GREY
     backgroundColor: '#B2BEB5',
-
     alignSelf: 'center',
     borderWidth: 4,
     borderColor: 'white',
