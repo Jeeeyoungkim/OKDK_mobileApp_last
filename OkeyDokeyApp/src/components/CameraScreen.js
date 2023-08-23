@@ -52,33 +52,28 @@ const CameraScreen = ({state}) => {
 
   const uploadData = async () => {
     try {
-      var body = new FormData();
+      let formdata = new FormData();
+      // ReactNativeBlobUtil를 사용하여 파일을 직접 불러옵니다.
+      //const blob = await ReactNativeBlobUtil.fs.readFile(imageSource, 'base64');
 
-      //   imageDataList.map((imageData, index) => {
-      //     var photo = {
-      //       uri: imageData,
-      //       type: 'multipart/form-data',
-      //       name: `${index}.jpg`,
-      //     };
-      //     body.append('image', photo);
-      //   });
-
-      var photo = {
-        uri: imageSource,
+      // Blob 데이터를 FormData에 추가합니다.
+      formdata.append('image', {
+        name: 'test.jpg',
         type: 'image/jpeg',
-        name: `test.jpg`,
-      };
-      body.append('image', photo);
+        uri: 'file://' + imageSource,
+      });
 
       await axios.post(
         'http://43.202.59.85/account/user/face/register/',
-        body,
+        formdata,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${accessToken}`,
           },
-          //헤더에 어세스 토큰 추가
+          transformRequest: (data, headers) => {
+            return data;
+          },
         },
       );
 
@@ -92,19 +87,7 @@ const CameraScreen = ({state}) => {
     } catch (error) {
       console.log('😛 Error :', error);
       console.log('😛 Error :', error.message);
-
-      // setShowSuccessMessage(true);
-      // // 2초 후에 메시지 숨기기 및 Home 화면으로 이동
-      // setTimeout(() => {
-      //   setShowSuccessMessage(false);
-      //   navigation.navigate('Home');
-      // }, 2000);
     }
-  };
-
-  const getFileContent = async source => {
-    const fileContent = await RNFS.readFile(source, 'base64');
-    return 'data:image/jpeg;base64,' + fileContent;
   };
 
   return (
