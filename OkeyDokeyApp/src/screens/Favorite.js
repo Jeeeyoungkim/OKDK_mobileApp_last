@@ -4,13 +4,19 @@ import WebView from 'react-native-webview';
 
 const Favorite = () => {
   return (
-    <View>
-      <Text>Favorite</Text>
-      <WebView
-        style={{width: 50, height: 50}}
-        source={{uri: 'www.naver.com'}}
-      />
-    </View>
+    <>
+      <View style={{flex: 1}}>
+        <WebView
+          mixedContentMode="always"
+          style={{width: '100%', height: '100%'}}
+          source={{uri: 'http://192.168.0.15:3000/favorite'}}
+          onError={syntheticEvent => {
+            const {nativeEvent} = syntheticEvent;
+            console.warn('WebView error: ', nativeEvent);
+          }}
+        />
+      </View>
+    </>
   );
 };
 
