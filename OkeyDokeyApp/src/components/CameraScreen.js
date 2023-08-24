@@ -53,10 +53,7 @@ const CameraScreen = ({state}) => {
   const uploadData = async () => {
     try {
       let formdata = new FormData();
-      // ReactNativeBlobUtil를 사용하여 파일을 직접 불러옵니다.
-      //const blob = await ReactNativeBlobUtil.fs.readFile(imageSource, 'base64');
 
-      // Blob 데이터를 FormData에 추가합니다.
       formdata.append('image', {
         name: 'test.jpg',
         type: 'image/jpeg',
