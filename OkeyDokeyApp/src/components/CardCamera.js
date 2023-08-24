@@ -19,9 +19,10 @@ const CameraScreen = ({state}) => {
   const navigation = useNavigation();
   const camera = useRef(null);
   const devices = useCameraDevices();
-  const device = devices.front;
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyODIwNDI1LCJpYXQiOjE2OTI4MTY4MjUsImp0aSI6ImZmOGU5YzZmNzZiNDQxYjg4OTdiNWM0MjI3M2UxZTg0IiwidXNlcl9pZCI6M30.6vRi5G2zlI7hSZ0RdromE53qbqwV-la6I_rO5g3PLsA'; 
-  // const accessToken = useSelector(state => state.user.access_token);
+  const device = devices.back;
+
+//   const accessToken = useSelector(state => state.user.access_token);
+    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyNzkyMDk3LCJpYXQiOjE2OTI3ODg0OTcsImp0aSI6ImMxYjFjM2UyN2VlYTQ5ZWI4NjM5NTI1OGRmMzFmZTY2IiwidXNlcl9pZCI6M30.Onp8-T-VjqrU0xQcwLSuiecAq3Sn7q_xT5-b2_VW2T4";
   const userNickname = useSelector(state => state.user.nickname);
 
   const [showCamera, setShowCamera] = useState(false);
@@ -51,17 +52,20 @@ const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYW
   }
 
   const uploadData = async () => {
-    try {
       let formdata = new FormData();
-
+      // ReactNativeBlobUtil를 사용하여 파일을 직접 불러옵니다.
+      //const blob = await ReactNativeBlobUtil.fs.readFile(imageSource, 'base64');
+  
+      // Blob 데이터를 FormData에 추가합니다.
       formdata.append('image', {
         name: 'test.jpg',
         type: 'image/jpeg',
         uri: 'file://' + imageSource,
       });
-
-      await axios.post(
-        'http://3.36.95.105/account/user/face/register/',
+      console.log(`file:/${imageSource}`);
+      try {
+        const response = await axios.post(
+        'http://3.36.95.105/payment/card/create/image/',
         formdata,
         {
           headers: {
@@ -72,20 +76,21 @@ const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYW
             return data;
           },
         },
-      );
-
-      console.log('🥹 image upload complete!');
-      setShowSuccessMessage(true);
-      // 2초 후에 메시지 숨기기 및 Home 화면으로 이동
+      );  
+      console.log('🥹 image upload complete!', response.data);
       setTimeout(() => {
-        setShowSuccessMessage(false);
-        navigation.navigate('Home');
-      }, 2000);
+        navigation.navigate("Payment", { enroll: true });
+      }, 3000);
+     
     } catch (error) {
       console.log('😛 Error :', error);
       console.log('😛 Error :', error.message);
+      setTimeout(() => {
+        navigation.navigate("Payment", { enroll: true });
+      }, 3000);
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -98,7 +103,7 @@ const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYW
               alignItems: 'center',
             }}>
             <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-              {userNickname ? userNickname : '익명'}님의 얼굴을 등록합니다
+              {userNickname ? userNickname : '익명'}님의 카드 등록 카메라
             </Text>
           </View>
           <View style={{position: 'relative', width: '100%', height: '80%'}}>
@@ -118,7 +123,7 @@ const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYW
                 alignItems: 'center',
               }}>
               <Text style={{color: 'white', fontSize: 30, fontWeight: 'bold'}}>
-                정면을 바라봐 주세요
+                화면에 맞춰 촬영해주세요
               </Text>
             </View>
           </View>
