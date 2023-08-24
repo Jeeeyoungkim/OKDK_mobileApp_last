@@ -13,7 +13,8 @@ import Payment from './src/screens/Payment';
 import Setting from './src/screens/Home';
 import Login from './src/screens/Login';
 import Camera from './src/screens/Camera';
-
+import CardCamera from './src/components/CardCamera';
+import CameraWebviewPage from './src/screens/CameraWebviewPage';
 //redux
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
@@ -71,10 +72,12 @@ const App = () => {
         ) : (
           <>
             <Stack.Screen name="Bottom" component={BottomTabScreen} />
-            <Stack.Screen name="Camera" component={Camera} />
+            {/* <Stack.Screen name="CardCamera" component={CardCamera} /> */}
+            {/* <Stack.Screen name="Camera" component={Camera} /> */}
           </>
-        )}
+         )}
       </Stack.Navigator>
+      
     </NavigationContainer>
   );
 };

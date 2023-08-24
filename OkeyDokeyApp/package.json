@@ -17,6 +17,7 @@
     "@react-navigation/native-stack": "^6.9.13",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
+    "base64-js": "^1.5.1",
     "react": "17.0.2",
     "react-native": "0.68.2",
     "react-native-fs": "^2.20.0",
