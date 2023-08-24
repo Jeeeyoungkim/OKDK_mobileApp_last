@@ -39,20 +39,21 @@ const Login = () => {
   };
 
   const fetchUserInfo = async token => {
-    console.log('Fetching user info');
     try {
-      const response = await axios.get('http://43.202.59.85/account/user', {
+      const response = await axios.get('http://3.36.95.105/account/user', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      const userInfo = response.data;
+      const userInfo = response.data.user;
       dispatch(setNickname(userInfo.nickname));
+      console.log('face_registered : ', userInfo.face_registered);
 
       if (userInfo.face_registered === false) {
         navigation.navigate('Camera');
       }
+      navigation.navigate('Bottom', {screen: 'Home'});
     } catch (error) {
       console.error('Failed to fetch user info', error);
     }
