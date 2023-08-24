@@ -181,6 +181,7 @@ const App = () => {
           <Stack.Screen name="Bottom" component={BottomTabScreen} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Camera" component={Camera} />
+          <Stack.Screen name="CardCamera" component={CardCamera} />
         </>
       </Stack.Navigator>
     </NavigationContainer>
