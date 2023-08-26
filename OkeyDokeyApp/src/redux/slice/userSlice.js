@@ -21,8 +21,9 @@ const userSlice = createSlice({
       // 닉네임만 업데이트하는 액션
       state.nickname = action.payload;
     },
+    logout: () => initialState, // 이 부분을 추가합니다.
   },
 });
 
-export const {login, setNickname} = userSlice.actions;
+export const {login, logout, setNickname} = userSlice.actions;
 export default userSlice.reducer;
