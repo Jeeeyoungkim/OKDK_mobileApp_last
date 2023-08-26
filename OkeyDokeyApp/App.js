@@ -13,7 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Home from './src/screens/Home';
 import Favorite from './src/screens/Favorite';
 import Payment from './src/screens/Payment';
-import Setting from './src/screens/Home';
+import Setting from './src/screens/Setting';
 import Login from './src/screens/Login';
 import Camera from './src/screens/Camera';
 import CardCamera from './src/components/CardCamera';
@@ -94,6 +94,8 @@ const UserInfoHandler = () => {
           }
         } catch (refreshError) {
           console.error('Error refreshing access token:', refreshError);
+          console.log('login으로 이동');
+          navigation.navigate('Login');
         }
       }
     }
