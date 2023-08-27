@@ -15,11 +15,11 @@ const Setting = () => {
     try {
       const messageData = JSON.parse(event.nativeEvent.data);
 
-      //로그인 성공시
+      //로그아웃 성공시
       if (messageData && messageData.status === 'logout') {
         console.log('로그아웃 : ', messageData.status);
 
-        // AsyncStorage에 토큰 저장
+        // AsyncStorage에 토큰 삭제
         await AsyncStorage.removeItem('access_token', messageData.access_token);
         await AsyncStorage.removeItem(
           'refresh_token',
@@ -29,6 +29,11 @@ const Setting = () => {
         // Redux에 로그인 정보 삭제
         dispatch(logout());
         navigation.navigate('Login');
+      }
+
+      if (messageData && messageData.status === 'updateFace') {
+        console.log('얼굴갱신 : ', messageData.status);
+        navigation.navigate('Camera');
       }
     } catch (error) {
       console.error('Error handling the message:', error);
