@@ -33,17 +33,17 @@ const Setting = () => {
 
       if (messageData && messageData.status === 'updateFace') {
         console.log('얼굴갱신 : ', messageData.status);
-        navigation.navigate('Camera');
+        navigation.navigate('Camera', {update: true});
       }
     } catch (error) {
-      console.error('Error handling the message:', error);
+      console.error('Error handling the message:', error.response.data.detail);
     }
   };
 
   return (
     <>
       <WebView
-        source={{uri: 'http://192.168.0.15:3000/Setting'}}
+        source={{uri: 'http://192.168.0.16:3000/Setting'}}
         onMessage={handleMessage}
       />
     </>

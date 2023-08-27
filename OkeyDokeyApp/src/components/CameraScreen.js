@@ -1,26 +1,20 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {
-  View,
-  StyleSheet,
-  Button,
-  TouchableOpacity,
-  Text,
-  Linking,
-  Image,
-} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
 import axios from 'axios';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
 
-const CameraScreen = ({state}) => {
+const CameraScreen = ({updateState}) => {
   const navigation = useNavigation();
+
   const camera = useRef(null);
   const devices = useCameraDevices();
   const device = devices.front;
+
   const userNickname = useSelector(state => state.user.nickname);
 
   const [showCamera, setShowCamera] = useState(false);
@@ -39,6 +33,8 @@ const CameraScreen = ({state}) => {
     const body = {
       refresh: await AsyncStorage.getItem('refresh_token'),
     };
+    const refresh = await AsyncStorage.getItem('refresh_token');
+    console.log('Refresh Token:', refresh);
 
     try {
       const response = await axios.post(
@@ -74,10 +70,6 @@ const CameraScreen = ({state}) => {
     console.log(photo.path);
   };
 
-  if (device == null) {
-    return <Text>Camera not available</Text>;
-  }
-
   const uploadData = async () => {
     const accessToken = await AsyncStorage.getItem('access_token');
     try {
@@ -88,20 +80,35 @@ const CameraScreen = ({state}) => {
         type: 'image/jpeg',
         uri: 'file://' + imageSource,
       });
-
-      await axios.post(
-        'http://3.36.95.105/account/user/face/register/',
-        formdata,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${accessToken}`,
+      if (updateState.update) {
+        await axios.put(
+          'http://3.36.95.105/account/user/face/register/',
+          formdata,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Bearer ${accessToken}`,
+            },
+            transformRequest: (data, headers) => {
+              return data;
+            },
           },
-          transformRequest: (data, headers) => {
-            return data;
+        );
+      } else {
+        await axios.post(
+          'http://3.36.95.105/account/user/face/register/',
+          formdata,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Bearer ${accessToken}`,
+            },
+            transformRequest: (data, headers) => {
+              return data;
+            },
           },
-        },
-      );
+        );
+      }
 
       console.log('🥹 image upload complete!');
       setShowSuccessMessage(true);
@@ -112,7 +119,7 @@ const CameraScreen = ({state}) => {
       }, 2000);
     } catch (error) {
       console.log('😛 Error :', error);
-      console.log('😛 Error :', error.message);
+      console.log('😛 Error :', error.response.data);
 
       if (error.response && error.response.status === 401) {
         try {
@@ -133,6 +140,10 @@ const CameraScreen = ({state}) => {
       }
     }
   };
+
+  if (device == null) {
+    return <Text>Camera not available</Text>;
+  }
 
   return (
     <View style={styles.container}>

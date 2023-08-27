@@ -9,13 +9,16 @@ const Home = () => {
   const postMessage = async ({type, data}) => {
     const accessToken = await AsyncStorage.getItem('access_token');
     const refreshToken = await AsyncStorage.getItem('refresh_token');
+
     const script = `
     localStorage.setItem('access', ${JSON.stringify(accessToken)});
     localStorage.setItem('refresh', ${JSON.stringify(refreshToken)});
     console.log("localStorage 세팅완료");
     window.ReactNativeWebView.postMessage("SetToken");`;
 
-    webViewRef.current.injectJavaScript(script);
+    if (accessToken && refreshToken) {
+      webViewRef.current.injectJavaScript(script);
+    }
   };
 
   const onWebMessage = event => {
