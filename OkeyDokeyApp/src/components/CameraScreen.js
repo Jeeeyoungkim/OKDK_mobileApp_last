@@ -8,8 +8,9 @@ import {
   Linking,
   Image,
 } from 'react-native';
-import RNFS from 'react-native-fs';
 import axios from 'axios';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -20,8 +21,6 @@ const CameraScreen = ({state}) => {
   const camera = useRef(null);
   const devices = useCameraDevices();
   const device = devices.front;
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyODIwNDI1LCJpYXQiOjE2OTI4MTY4MjUsImp0aSI6ImZmOGU5YzZmNzZiNDQxYjg4OTdiNWM0MjI3M2UxZTg0IiwidXNlcl9pZCI6M30.6vRi5G2zlI7hSZ0RdromE53qbqwV-la6I_rO5g3PLsA'; 
-  // const accessToken = useSelector(state => state.user.access_token);
   const userNickname = useSelector(state => state.user.nickname);
 
   const [showCamera, setShowCamera] = useState(false);
@@ -35,6 +34,35 @@ const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYW
     }
     getPermission();
   }, []);
+
+  const refreshAccessToken = async () => {
+    const body = {
+      refresh: await AsyncStorage.getItem('refresh_token'),
+    };
+
+    try {
+      const response = await axios.post(
+        'http://3.36.95.105/account/refresh/access_token/',
+        body,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      const access = response.data.access;
+      const refresh = response.data.refresh;
+
+      await AsyncStorage.setItem('access_token', access);
+      await AsyncStorage.setItem('refresh_token', refresh);
+
+      console.log('success : refresh Access Token');
+    } catch (error) {
+      console.error('Error refreshing access token:', error);
+      throw error;
+    }
+  };
 
   const capturePhoto = async () => {
     if (camera.current == null) {
@@ -51,11 +79,12 @@ const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYW
   }
 
   const uploadData = async () => {
+    const accessToken = await AsyncStorage.getItem('access_token');
     try {
       let formdata = new FormData();
 
       formdata.append('image', {
-        name: 'test.jpg',
+        name: 'test2.jpg',
         type: 'image/jpeg',
         uri: 'file://' + imageSource,
       });
@@ -84,6 +113,24 @@ const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYW
     } catch (error) {
       console.log('😛 Error :', error);
       console.log('😛 Error :', error.message);
+
+      if (error.response && error.response.status === 401) {
+        try {
+          console.log('Attempting to refresh the access token...');
+          await refreshAccessToken();
+
+          const newAccessToken = await AsyncStorage.getItem('access_token');
+          if (newAccessToken) {
+            await uploadData();
+          } else {
+            console.log('Failed to get new access token from storage.');
+          }
+        } catch (refreshError) {
+          console.error('Error refreshing access token:', refreshError);
+          console.log('login으로 이동');
+          navigation.navigate('Login');
+        }
+      }
     }
   };
 

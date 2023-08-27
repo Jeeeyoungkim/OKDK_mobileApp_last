@@ -24,7 +24,7 @@ const Home = () => {
     if (messageData === 'SetToken') {
       console.log('LocalStorage has been set in the WebView!');
       // 앱에서 로컬스토리지에 토큰설정 후 fetchData 실행
-      webViewRef.current.injectJavaScript(`window.fetchData()`);
+      webViewRef.current.injectJavaScript(`window.fetchData`);
     }
   };
 
