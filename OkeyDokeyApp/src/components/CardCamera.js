@@ -21,8 +21,7 @@ const CameraScreen = ({state}) => {
   const devices = useCameraDevices();
   const device = devices.back;
 
-//   const accessToken = useSelector(state => state.user.access_token);
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyNzkyMDk3LCJpYXQiOjE2OTI3ODg0OTcsImp0aSI6ImMxYjFjM2UyN2VlYTQ5ZWI4NjM5NTI1OGRmMzFmZTY2IiwidXNlcl9pZCI6M30.Onp8-T-VjqrU0xQcwLSuiecAq3Sn7q_xT5-b2_VW2T4";
+  const accessToken = useSelector(state => state.user.access_token);
   const userNickname = useSelector(state => state.user.nickname);
 
   const [showCamera, setShowCamera] = useState(false);
@@ -53,10 +52,7 @@ const CameraScreen = ({state}) => {
 
   const uploadData = async () => {
       let formdata = new FormData();
-      // ReactNativeBlobUtil를 사용하여 파일을 직접 불러옵니다.
-      //const blob = await ReactNativeBlobUtil.fs.readFile(imageSource, 'base64');
-  
-      // Blob 데이터를 FormData에 추가합니다.
+
       formdata.append('image', {
         name: 'test.jpg',
         type: 'image/jpeg',
