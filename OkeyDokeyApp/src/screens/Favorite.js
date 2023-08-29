@@ -9,7 +9,7 @@ const Favorite = () => {
         <WebView
           mixedContentMode="always"
           style={{width: '100%', height: '100%'}}
-          source={{uri: 'http://192.168.123.103:3000/favorite'}}
+          source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/favorite'}}
           onError={syntheticEvent => {
             const {nativeEvent} = syntheticEvent;
             console.warn('WebView error: ', nativeEvent);

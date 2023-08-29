@@ -40,7 +40,7 @@ const Home = () => {
           ref={webViewRef}
           mixedContentMode="always"
           style={{width: '100%', height: '100%'}}
-          source={{uri: 'http://192.168.0.15:3000'}}
+          source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app'}}
           onError={syntheticEvent => {
             const {nativeEvent} = syntheticEvent;
             console.warn('WebView error: ', nativeEvent);

@@ -10,7 +10,7 @@ const Payment = () => {
       <WebView
         mixedContentMode="always"
         style={{width: '100%', height: '100%'}}
-        source={{uri: 'http://192.168.201.12:3000/payment'}}
+        source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/payment'}}
         onError={syntheticEvent => {
           const {nativeEvent} = syntheticEvent;
           console.warn('WebView error: ', nativeEvent);

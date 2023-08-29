@@ -17,7 +17,6 @@ import Setting from './src/screens/Setting';
 import Login from './src/screens/Login';
 import Camera from './src/screens/Camera';
 import CardCamera from './src/components/CardCamera';
-import CameraWebviewPage from './src/screens/CameraWebviewPage';
 //redux
 import {Provider} from 'react-redux';
 import {login, setNickname} from './src/redux/slice/userSlice';
