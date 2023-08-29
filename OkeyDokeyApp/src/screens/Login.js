@@ -64,7 +64,7 @@ const Login = () => {
       <WebView
         mixedContentMode="always"
         style={{width: '100%', height: '100%'}}
-        source={{uri: 'http://192.168.123.103:3000/login'}}
+        source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/login'}}
         onMessage={handleMessage}
         onError={syntheticEvent => {
           const {nativeEvent} = syntheticEvent;

@@ -43,7 +43,7 @@ const Setting = () => {
   return (
     <>
       <WebView
-        source={{uri: 'http://192.168.0.16:3000/Setting'}}
+        source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/Setting'}}
         onMessage={handleMessage}
       />
     </>
