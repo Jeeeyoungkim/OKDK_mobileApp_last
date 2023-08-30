@@ -43,7 +43,9 @@ const Setting = () => {
   return (
     <>
       <WebView
-        source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/Setting'}}
+        mixedContentMode="always"
+        style={{width: '100%', height: '100%'}}
+        source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/setting'}}
         onMessage={handleMessage}
       />
     </>

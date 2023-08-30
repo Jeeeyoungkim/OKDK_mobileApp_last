@@ -70,12 +70,13 @@ const UserInfoHandler = () => {
       dispatch(setNickname(userInfo.nickname));
       console.log('face_registered : ', userInfo.face_registered);
 
-      if (userInfo.face_registered === false) {
-        navigation.navigate('Camera');
+      if (userInfo.face_registered !== true) {
+        console.log('false');
+        navigation.navigate('Login');
+      } else {
+        console.log('home으로 이동'); //userinfo 가져오는데 성공하면 home으로 이동
+        navigation.navigate('Bottom', {screen: 'Home'});
       }
-
-      console.log('home으로 이동'); //userinfo 가져오는데 성공하면 home으로 이동
-      navigation.navigate('Bottom', {screen: 'Home'});
     } catch (error) {
       console.error('Failed to fetch user info', error);
 
@@ -102,9 +103,6 @@ const UserInfoHandler = () => {
 
   useEffect(() => {
     const checkToken = async () => {
-      // await AsyncStorage.removeItem('access_token');
-      // await AsyncStorage.removeItem('refresh_token');
-
       try {
         const accessToken = await AsyncStorage.getItem('access_token');
         const refreshToken = await AsyncStorage.getItem('refresh_token');

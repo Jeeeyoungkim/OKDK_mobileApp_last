@@ -52,8 +52,10 @@ const Login = () => {
 
       if (userInfo.face_registered === false) {
         navigation.navigate('Camera');
+      } else {
+        console.log('Home으로 이동');
+        navigation.navigate('Bottom', {screen: 'Home'});
       }
-      navigation.navigate('Bottom', {screen: 'Home'});
     } catch (error) {
       console.error('Failed to fetch user info', error);
     }

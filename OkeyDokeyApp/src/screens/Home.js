@@ -34,8 +34,6 @@ const Home = () => {
   return (
     <>
       <View style={{flex: 1}}>
-        <Text>hi</Text>
-        {/* <CardCamera/> */}
         <WebView
           ref={webViewRef}
           mixedContentMode="always"
@@ -49,7 +47,6 @@ const Home = () => {
           onMessage={onWebMessage}
         />
       </View>
-      {/* <CameraScreen/> */}
     </>
   );
 };
