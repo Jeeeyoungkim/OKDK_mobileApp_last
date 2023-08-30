@@ -72,6 +72,7 @@ const Login = () => {
           const {nativeEvent} = syntheticEvent;
           console.warn('WebView error: ', nativeEvent);
         }}
+        userAgent="Chrome/56.0.0.0 Mobile"
       />
     </View>
   );
