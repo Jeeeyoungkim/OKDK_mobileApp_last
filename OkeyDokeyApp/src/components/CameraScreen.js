@@ -17,9 +17,11 @@ const CameraScreen = ({updateState}) => {
 
   const userNickname = useSelector(state => state.user.nickname);
 
-  const [showCamera, setShowCamera] = useState(false);
+  const [showCamera, setShowCamera] = useState(true);
   const [imageSource, setImageSource] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showLoadingMessage, setShowLoadingMessage] = useState(false);
+  const [showWarningMessage, setShowWaringMessage] = useState(false);
 
   useEffect(() => {
     async function getPermission() {
@@ -71,6 +73,7 @@ const CameraScreen = ({updateState}) => {
   };
 
   const uploadData = async () => {
+    setShowLoadingMessage(true);
     const accessToken = await AsyncStorage.getItem('access_token');
     try {
       let formdata = new FormData();
@@ -111,6 +114,7 @@ const CameraScreen = ({updateState}) => {
       }
 
       console.log('🥹 image upload complete!');
+      setShowLoadingMessage(false);
       setShowSuccessMessage(true);
       // 2초 후에 메시지 숨기기 및 Home 화면으로 이동
       setTimeout(() => {
@@ -118,6 +122,13 @@ const CameraScreen = ({updateState}) => {
         navigation.navigate('Home');
       }, 2000);
     } catch (error) {
+      setShowLoadingMessage(false);
+      setShowWaringMessage(true);
+
+      setTimeout(() => {
+        setShowWaringMessage(false);
+      }, 2000);
+
       console.log('😛 Error :', error);
       console.log('😛 Error :', error.response.data);
 
@@ -195,22 +206,27 @@ const CameraScreen = ({updateState}) => {
         <>
           {imageSource !== null ? (
             <>
+              {showLoadingMessage && (
+                <View style={styles.showMessage}>
+                  <Icon name="exclamationcircle" size={50} color="#65a30d" />
+                  <Text style={styles.showMessageText}>
+                    사진 등록 중 입니다
+                  </Text>
+                </View>
+              )}
               {showSuccessMessage && (
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    zIndex: 999,
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                  }}>
+                <View style={styles.showMessage}>
                   <Icon name="checkcircle" size={50} color="#056CF2" />
-                  <Text style={{color: 'white', fontSize: 20, marginTop: 20}}>
+                  <Text style={styles.showMessageText}>
                     등록이 완료되었어요
+                  </Text>
+                </View>
+              )}
+              {showWarningMessage && (
+                <View style={styles.showMessage}>
+                  <Icon name="exclamationcircle" size={50} color="#dc2626" />
+                  <Text style={styles.showMessageText}>
+                    얼굴이 인식되지 않았습니다 {'\n'} 다시 시도해 주세요
                   </Text>
                 </View>
               )}
@@ -256,31 +272,8 @@ const CameraScreen = ({updateState}) => {
               </View>
             </>
           ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{justifyContent: 'center', alignItems: 'center'}}>
-                얼굴을 등록하지 않으면 서비스 이용이 불가능합니다.
-              </Text>
-              <View style={styles.backButton}>
-                <TouchableOpacity
-                  onPress={() => setShowCamera(true)}
-                  style={{
-                    backgroundColor: '#056CF2',
-                    padding: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 10,
-                    borderWidth: 2,
-                    borderColor: '#fff',
-                    width: 100,
-                  }}>
-                  <Text style={{color: 'white', fontWeight: '500'}}>확인</Text>
-                </TouchableOpacity>
-              </View>
+            <View>
+              <Text>잠시만 기다려 주세요...</Text>
             </View>
           )}
         </>
@@ -336,6 +329,23 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '80%',
+  },
+  showMessage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 999,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  showMessageText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 20,
+    marginTop: 20,
   },
 });
 
