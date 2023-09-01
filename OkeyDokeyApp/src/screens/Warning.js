@@ -1,9 +1,34 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  BackHandler,
+} from 'react-native';
+import React, {useEffect} from 'react';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const Warning = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const updateState = route.params ? route.params : false;
+
+  useEffect(() => {
+    const handleBackPress = () => {
+      if (!updateState) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, []);
 
   return (
     <>
