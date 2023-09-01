@@ -71,8 +71,8 @@ const UserInfoHandler = () => {
       console.log('face_registered : ', userInfo.face_registered);
 
       if (userInfo.face_registered !== true) {
-        console.log('false');
-        navigation.navigate('Login');
+        console.log('얼굴 등록 필요');
+        navigation.navigate('Camera');
       } else {
         console.log('home으로 이동'); //userinfo 가져오는데 성공하면 home으로 이동
         navigation.navigate('Bottom', {screen: 'Home'});
