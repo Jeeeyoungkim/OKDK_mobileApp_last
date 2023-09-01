@@ -14,14 +14,8 @@ const Home = () => {
       tabBarButton: props => (
         <TouchableWithoutFeedback
           onPress={() => {
-            // Home 탭이 이미 선택된 상태에서 다시 탭을 누르면 웹뷰를 새로고침
-            if (props.accessibilityState.selected) {
-              console.log('reload');
-              // const newUri =
-              //   'https://voluble-basbousa-74cfc0.netlify.app/Favorite';
-              // setUri(newUri);
-              setKey(prevKey => prevKey + 1);
-            }
+            console.log('reload');
+            setKey(prevKey => prevKey + 1);
             props.onPress();
           }}>
           <View style={props.style}>{props.children}</View>

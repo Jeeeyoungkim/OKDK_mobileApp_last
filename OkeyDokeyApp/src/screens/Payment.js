@@ -12,12 +12,9 @@ const Payment = () => {
       tabBarButton: props => (
         <TouchableWithoutFeedback
           onPress={() => {
-            // Home 탭이 이미 선택된 상태에서 다시 탭을 누르면 웹뷰를 새로고침
             if (props.accessibilityState.selected) {
               console.log('reload');
-              // const newUri =
-              //   'https://voluble-basbousa-74cfc0.netlify.app/Favorite';
-              // setUri(newUri);
+
               setKey(prevKey => prevKey + 1);
             }
             props.onPress();
@@ -45,7 +42,7 @@ const Payment = () => {
         key={key} // key prop 추가
         mixedContentMode="always"
         style={{width: '100%', height: '100%'}}
-        source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/payment'}}
+        source={{uri: 'http://43.201.113.143/payment'}}
         onError={syntheticEvent => {
           const {nativeEvent} = syntheticEvent;
           console.warn('WebView error: ', nativeEvent);

@@ -73,7 +73,7 @@ const Setting = () => {
         key={key}
         mixedContentMode="always"
         style={{width: '100%', height: '100%'}}
-        source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/setting'}}
+        source={{uri: 'http://43.201.113.143/setting'}}
         onMessage={handleMessage}
       />
     </>

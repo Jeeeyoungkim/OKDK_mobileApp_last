@@ -45,7 +45,7 @@ const Favorite = ({navigation}) => {
           key={key} // key prop 추가
           mixedContentMode="always"
           style={{width: '100%', height: '100%'}}
-          source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/Favorite'}}
+          source={{uri: 'http://43.201.113.143/Favorite'}}
           onError={syntheticEvent => {
             const {nativeEvent} = syntheticEvent;
             console.warn('WebView error: ', nativeEvent);
