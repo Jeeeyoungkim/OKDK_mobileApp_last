@@ -1,8 +1,32 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import WebView from 'react-native-webview';
+import {View, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 
-const Favorite = () => {
+const Favorite = ({navigation}) => {
+  const webViewRef = useRef(null);
+  const [key, setKey] = useState(0); // 새로운 상태 변수
+
+  useEffect(() => {
+    navigation.setOptions({
+      tabBarButton: props => (
+        <TouchableWithoutFeedback
+          onPress={() => {
+            // Home 탭이 이미 선택된 상태에서 다시 탭을 누르면 웹뷰를 새로고침
+            if (props.accessibilityState.selected) {
+              console.log('reload');
+              // const newUri =
+              //   'https://voluble-basbousa-74cfc0.netlify.app/Favorite';
+              // setUri(newUri);
+              setKey(prevKey => prevKey + 1);
+            }
+            props.onPress();
+          }}>
+          <View style={props.style}>{props.children}</View>
+        </TouchableWithoutFeedback>
+      ),
+    });
+  }, [navigation]);
+
   const onWebMessage = event => {
     const messageData = JSON.parse(event.nativeEvent.data);
 
@@ -18,9 +42,10 @@ const Favorite = () => {
     <>
       <View style={{flex: 1}}>
         <WebView
+          key={key} // key prop 추가
           mixedContentMode="always"
           style={{width: '100%', height: '100%'}}
-          source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/favorite'}}
+          source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/Favorite'}}
           onError={syntheticEvent => {
             const {nativeEvent} = syntheticEvent;
             console.warn('WebView error: ', nativeEvent);
