@@ -51,7 +51,7 @@ const Login = () => {
       console.log('face_registered : ', userInfo.face_registered);
 
       if (userInfo.face_registered === false) {
-        navigation.navigate('Camera');
+        navigation.navigate('Warning');
       } else {
         console.log('Home으로 이동');
         navigation.navigate('Bottom', {screen: 'Home'});
@@ -66,7 +66,7 @@ const Login = () => {
       <WebView
         mixedContentMode="always"
         style={{width: '100%', height: '100%'}}
-        source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app/login'}}
+        source={{uri: 'http://43.201.113.143/login'}}
         onMessage={handleMessage}
         onError={syntheticEvent => {
           const {nativeEvent} = syntheticEvent;

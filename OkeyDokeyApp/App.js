@@ -17,13 +17,12 @@ import Setting from './src/screens/Setting';
 import Login from './src/screens/Login';
 import Camera from './src/screens/Camera';
 import CardCamera from './src/components/CardCamera';
+import Warning from './src/screens/Warning';
 //redux
 import {Provider} from 'react-redux';
 import {login, setNickname} from './src/redux/slice/userSlice';
 import {store} from './src/redux/store';
 import {useSelector, useDispatch} from 'react-redux';
-
-import {createIconSetFromFontello} from 'react-native-vector-icons';
 
 const UserInfoHandler = () => {
   const navigation = useNavigation();
@@ -72,7 +71,7 @@ const UserInfoHandler = () => {
 
       if (userInfo.face_registered !== true) {
         console.log('얼굴 등록 필요');
-        navigation.navigate('Camera');
+        navigation.navigate('Warning');
       } else {
         console.log('home으로 이동'); //userinfo 가져오는데 성공하면 home으로 이동
         navigation.navigate('Bottom', {screen: 'Home'});
@@ -184,6 +183,7 @@ const App = () => {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Camera" component={Camera} />
           <Stack.Screen name="CardCamera" component={CardCamera} />
+          <Stack.Screen name="Warning" component={Warning} />
         </>
       </Stack.Navigator>
     </NavigationContainer>

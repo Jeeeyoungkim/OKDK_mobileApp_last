@@ -56,11 +56,6 @@ const Home = () => {
       webViewRef.current.injectJavaScript(`window.fetchData`);
     }
 
-    if (messageData.status === 'Home') {
-      console.log('네비게이션 이동 : ', messageData.status);
-      navigation.navigate('Bottom', {screen: 'Home'});
-    }
-
     if (messageData.status === 'Favorite') {
       console.log('네비게이션 이동 : ', messageData.status);
       navigation.navigate('Bottom', {screen: 'Favorite'});
@@ -80,7 +75,7 @@ const Home = () => {
           ref={webViewRef}
           mixedContentMode="always"
           style={{width: '100%', height: '100%'}}
-          source={{uri: 'https://voluble-basbousa-74cfc0.netlify.app'}}
+          source={{uri: 'http://43.201.113.143/'}}
           onError={syntheticEvent => {
             const {nativeEvent} = syntheticEvent;
             console.warn('WebView error: ', nativeEvent);
