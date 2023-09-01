@@ -103,6 +103,9 @@ const UserInfoHandler = () => {
 
   useEffect(() => {
     const checkToken = async () => {
+      // const accessToken = await AsyncStorage.removeItem('access_token');
+      // const refreshToken = await AsyncStorage.removeItem('refresh_token');
+
       try {
         const accessToken = await AsyncStorage.getItem('access_token');
         const refreshToken = await AsyncStorage.getItem('refresh_token');

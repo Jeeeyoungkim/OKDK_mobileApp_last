@@ -35,6 +35,11 @@ const Setting = () => {
         console.log('얼굴갱신 : ', messageData.status);
         navigation.navigate('Camera', {update: true});
       }
+
+      if (messageData.status === 'Home') {
+        console.log('네비게이션 이동 : ', messageData.status);
+        navigation.navigate('Bottom', {screen: 'Home'});
+      }
     } catch (error) {
       console.error('Error handling the message:', error.response.data.detail);
     }

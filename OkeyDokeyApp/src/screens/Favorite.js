@@ -3,6 +3,17 @@ import React from 'react';
 import WebView from 'react-native-webview';
 
 const Favorite = () => {
+  const onWebMessage = event => {
+    const messageData = JSON.parse(event.nativeEvent.data);
+
+    console.log(messageData.status);
+
+    if (messageData.status === 'Home') {
+      console.log('네비게이션 이동 : ', messageData.status);
+      navigation.navigate('Bottom', {screen: 'Home'});
+    }
+  };
+
   return (
     <>
       <View style={{flex: 1}}>
@@ -14,6 +25,7 @@ const Favorite = () => {
             const {nativeEvent} = syntheticEvent;
             console.warn('WebView error: ', nativeEvent);
           }}
+          onMessage={onWebMessage}
         />
       </View>
     </>

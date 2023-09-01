@@ -5,6 +5,18 @@ import {useNavigation} from '@react-navigation/native';
 
 const Payment = () => {
   const navigation = useNavigation();
+
+  const onWebMessage = event => {
+    const messageData = JSON.parse(event.nativeEvent.data);
+
+    console.log(messageData.status);
+
+    if (messageData.status === 'Home') {
+      console.log('네비게이션 이동 : ', messageData.status);
+      navigation.navigate('Bottom', {screen: 'Home'});
+    }
+  };
+
   return (
     <>
       <WebView
@@ -15,6 +27,7 @@ const Payment = () => {
           const {nativeEvent} = syntheticEvent;
           console.warn('WebView error: ', nativeEvent);
         }}
+        onMessage={onWebMessage}
       />
     </>
   );
@@ -24,10 +37,9 @@ export default Payment;
 
 const styles = StyleSheet.create({});
 
-
-
 // webview - 카드 카메라로 사진 촬영 로직
-{/* <WebView
+{
+  /* <WebView
           mixedContentMode="always"
           style={{width: '100%', height: '100%'}}
           source={{uri: 'http://192.168.123.103:3000/morecards'}}
@@ -45,4 +57,5 @@ const styles = StyleSheet.create({});
             const {nativeEvent} = syntheticEvent;
             console.warn('WebView error: ', nativeEvent);
           }}
-        /> */}
+        /> */
+}

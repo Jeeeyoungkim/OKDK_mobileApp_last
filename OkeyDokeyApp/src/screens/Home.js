@@ -2,9 +2,11 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useRef} from 'react';
 import WebView from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   const webViewRef = useRef();
+  const navigation = useNavigation();
 
   const postMessage = async ({type, data}) => {
     const accessToken = await AsyncStorage.getItem('access_token');
@@ -14,7 +16,7 @@ const Home = () => {
     localStorage.setItem('access', ${JSON.stringify(accessToken)});
     localStorage.setItem('refresh', ${JSON.stringify(refreshToken)});
     console.log("localStorage 세팅완료");
-    window.ReactNativeWebView.postMessage("SetToken");`;
+    window.ReactNativeWebView.postMessage(JSON.stringify({ status: "SetToken" }));`;
 
     if (accessToken && refreshToken) {
       webViewRef.current.injectJavaScript(script);
@@ -22,12 +24,29 @@ const Home = () => {
   };
 
   const onWebMessage = event => {
-    const messageData = event.nativeEvent.data;
+    const messageData = JSON.parse(event.nativeEvent.data);
+
     console.log(messageData);
-    if (messageData === 'SetToken') {
+
+    if (messageData.status === 'SetToken') {
       console.log('LocalStorage has been set in the WebView!');
       // 앱에서 로컬스토리지에 토큰설정 후 fetchData 실행
       webViewRef.current.injectJavaScript(`window.fetchData`);
+    }
+
+    if (messageData.status === 'Home') {
+      console.log('네비게이션 이동 : ', messageData.status);
+      navigation.navigate('Bottom', {screen: 'Home'});
+    }
+
+    if (messageData.status === 'Favorite') {
+      console.log('네비게이션 이동 : ', messageData.status);
+      navigation.navigate('Bottom', {screen: 'Favorite'});
+    }
+
+    if (messageData.status === 'Payment') {
+      console.log('네비게이션 이동 : ', messageData.status);
+      navigation.navigate('Bottom', {screen: 'Payment'});
     }
   };
 
