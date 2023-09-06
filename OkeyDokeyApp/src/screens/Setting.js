@@ -37,10 +37,23 @@ const Setting = () => {
     try {
       const messageData = JSON.parse(event.nativeEvent.data);
 
+      //회원 탈퇴 시
+      console.log(messageData, messageData.status);
+      if(messageData && messageData.status === 'DeleteAccount') {
+        console.log("회원탈퇴 : ", messageData.status);
+        await AsyncStorage.removeItem('access_token', messageData.access_token);
+        await AsyncStorage.removeItem(
+          'refresh_token',
+          messageData.refresh_token,
+        );
+        
+        dispatch(logout());
+        navigation.navigate('Login');
+      }
+
       //로그아웃 성공시
       if (messageData && messageData.status === 'logout') {
         console.log('로그아웃 : ', messageData.status);
-
         // AsyncStorage에 토큰 삭제
         await AsyncStorage.removeItem('access_token', messageData.access_token);
         await AsyncStorage.removeItem(

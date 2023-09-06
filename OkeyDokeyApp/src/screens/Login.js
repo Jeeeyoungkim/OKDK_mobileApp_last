@@ -51,7 +51,8 @@ const Login = () => {
       console.log('face_registered : ', userInfo.face_registered);
 
       if (userInfo.face_registered === false) {
-        navigation.navigate('Warning');
+          console.log("Warning 경고입니다.")
+        // navigation.navigate('Warning');
       } else {
         console.log('Home으로 이동');
         navigation.navigate('Bottom', {screen: 'Home'});
