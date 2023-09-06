@@ -60,7 +60,7 @@ const Home = () => {
       navigation.navigate('Bottom', {screen: 'Payment'});
     }
 
-    if (messageData.status === 'Login') {
+    if (messageData.status === 'login') {
       console.log('네비게이션 이동 : ', messageData.status);
       navigation.navigate('Login');
     }
