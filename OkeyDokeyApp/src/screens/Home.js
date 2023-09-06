@@ -59,6 +59,11 @@ const Home = () => {
       console.log('네비게이션 이동 : ', messageData.status);
       navigation.navigate('Bottom', {screen: 'Payment'});
     }
+
+    if (messageData.status === 'Login') {
+      console.log('네비게이션 이동 : ', messageData.status);
+      navigation.navigate('Login');
+    }
   };
 
   return (
