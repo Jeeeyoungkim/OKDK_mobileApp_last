@@ -120,7 +120,7 @@ const UserInfoHandler = () => {
           console.log(accessToken, '/', refreshToken);
         } else {
           console.log('login으로 이동');
-          // navigation.navigate('Login');
+          navigation.navigate('Login');
         }
       } catch (error) {
         console.error('Error while checking token:', error);
