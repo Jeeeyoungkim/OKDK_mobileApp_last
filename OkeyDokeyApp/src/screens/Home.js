@@ -78,7 +78,7 @@ const Home = () => {
           mixedContentMode="always"
           style={{width: '100%', height: '100%'}}
           source={{
-            uri: 'http://ec2-43-201-113-143.ap-northeast-2.compute.amazonaws.com/',
+            uri: 'https://www.okdk.shop/',
           }}
           onError={syntheticEvent => {
             const {nativeEvent} = syntheticEvent;

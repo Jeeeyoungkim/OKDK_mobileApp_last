@@ -59,11 +59,14 @@ const Login = () => {
 
   const fetchUserInfo = async token => {
     try {
-      const response = await axios.get('https://www.okdkbackend.shop/account/user', {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.get(
+        'https://www.okdkbackend.shop/account/user',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       const userInfo = response.data.user;
       dispatch(setNickname(userInfo.nickname));
@@ -87,7 +90,7 @@ const Login = () => {
         mixedContentMode="always"
         style={{width: '100%', height: '100%'}}
         source={{
-          uri: 'http://ec2-43-201-113-143.ap-northeast-2.compute.amazonaws.com/login',
+          uri: 'https://www.okdk.shop/login',
         }}
         onMessage={handleMessage}
         onError={syntheticEvent => {
