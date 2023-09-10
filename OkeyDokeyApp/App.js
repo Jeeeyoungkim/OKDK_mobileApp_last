@@ -36,7 +36,7 @@ const UserInfoHandler = () => {
 
     try {
       const response = await axios.post(
-        'http://3.36.95.105/account/refresh/access_token/',
+        'https://www.okdkbackend.shop/account/refresh/access_token/',
         body,
         {
           headers: {
@@ -61,7 +61,7 @@ const UserInfoHandler = () => {
 
   const fetchUserInfo = async token => {
     try {
-      const response = await axios.get('http://3.36.95.105/account/user', {
+      const response = await axios.get('https://www.okdkbackend.shop/account/user', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -66,7 +66,7 @@ const CameraScreen = ({state}) => {
     console.log(`file:/${imageSource}`);
     try {
       const response = await axios.post(
-        'http://3.36.95.105/payment/card/create/image/',
+        'https://www.okdkbackend.shop/payment/card/create/image/',
         formdata,
         {
           headers: {
@@ -118,7 +118,7 @@ const CameraScreen = ({state}) => {
 
     try {
       const response = await axios.post(
-        'http://3.36.95.105/account/refresh/access_token/',
+        'https://www.okdkbackend.shop/account/refresh/access_token/',
         body,
         {
           headers: {
