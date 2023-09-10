@@ -59,7 +59,7 @@ const Login = () => {
 
   const fetchUserInfo = async token => {
     try {
-      const response = await axios.get('http://3.36.95.105/account/user', {
+      const response = await axios.get('https://www.okdkbackend.shop/account/user', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
