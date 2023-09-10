@@ -1,9 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, View, BackHandler} from 'react-native';
+import React, {useEffect} from 'react';
 import WebView from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 //redux
 import {useDispatch} from 'react-redux';
@@ -12,6 +12,25 @@ import {login, setNickname} from '../redux/slice/userSlice.js';
 const Login = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const updateState = route.params ? route.params : false;
+
+  useEffect(() => {
+    const handleBackPress = () => {
+      if (!updateState) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, []);
 
   const handleLoginSuccess = (access_token, refresh_token) => {
     dispatch(login({access_token, refresh_token}));
