@@ -17,6 +17,7 @@ const Warning = () => {
   useEffect(() => {
     const handleBackPress = () => {
       if (!updateState) {
+        navigation.navigate('Login');
         return true;
       } else {
         return false;
