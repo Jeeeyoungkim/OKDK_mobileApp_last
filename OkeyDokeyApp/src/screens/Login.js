@@ -86,7 +86,9 @@ const Login = () => {
       <WebView
         mixedContentMode="always"
         style={{width: '100%', height: '100%'}}
-        source={{uri: 'http://43.201.113.143/login'}}
+        source={{
+          uri: 'http://ec2-43-201-113-143.ap-northeast-2.compute.amazonaws.com/login',
+        }}
         onMessage={handleMessage}
         onError={syntheticEvent => {
           const {nativeEvent} = syntheticEvent;

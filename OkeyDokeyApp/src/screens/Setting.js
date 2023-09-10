@@ -39,14 +39,14 @@ const Setting = () => {
 
       //회원 탈퇴 시
       console.log(messageData, messageData.status);
-      if(messageData && messageData.status === 'DeleteAccount') {
-        console.log("회원탈퇴 : ", messageData.status);
+      if (messageData && messageData.status === 'DeleteAccount') {
+        console.log('회원탈퇴 : ', messageData.status);
         await AsyncStorage.removeItem('access_token', messageData.access_token);
         await AsyncStorage.removeItem(
           'refresh_token',
           messageData.refresh_token,
         );
-        
+
         dispatch(logout());
         navigation.navigate('Login');
       }
@@ -86,7 +86,9 @@ const Setting = () => {
         key={key}
         mixedContentMode="always"
         style={{width: '100%', height: '100%'}}
-        source={{uri: 'http://43.201.113.143/setting'}}
+        source={{
+          uri: 'http://ec2-43-201-113-143.ap-northeast-2.compute.amazonaws.com/setting',
+        }}
         onMessage={handleMessage}
       />
     </>

@@ -82,8 +82,8 @@ const UserInfoHandler = () => {
 
       //401 에러시 토큰 refresh
       if (error.response && error.response.status === 401) {
-        console.log('login으로 이동');
-        navigation.navigate('Login');
+        // console.log('login으로 이동');
+        // navigation.navigate('Login');
 
         try {
           console.log('Attempting to refresh the access token...');

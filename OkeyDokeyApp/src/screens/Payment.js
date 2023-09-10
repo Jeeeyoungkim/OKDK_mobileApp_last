@@ -74,8 +74,9 @@ const Payment = ({route}) => {
         ref={webViewRef}
         mixedContentMode="always"
         style={{width: '100%', height: '100%'}}
-        //43.201.113.143
-        source={{uri: 'http://43.201.113.143/payment'}}
+        source={{
+          uri: 'http://ec2-43-201-113-143.ap-northeast-2.compute.amazonaws.com/payment',
+        }}
         onError={syntheticEvent => {
           const {nativeEvent} = syntheticEvent;
           console.warn('WebView error: ', nativeEvent);

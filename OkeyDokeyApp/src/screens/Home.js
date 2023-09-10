@@ -29,10 +29,13 @@ const Home = () => {
     const refreshToken = await AsyncStorage.getItem('refresh_token');
 
     const script = `
+    localStorage.clear();
     localStorage.setItem('access', ${JSON.stringify(accessToken)});
     localStorage.setItem('refresh', ${JSON.stringify(refreshToken)});
     console.log("localStorage 세팅완료");
-    window.ReactNativeWebView.postMessage(JSON.stringify({ status: "SetToken" }));`;
+    window.ReactNativeWebView.postMessage(JSON.stringify({ status: "SetToken" }));
+   
+    `;
 
     if (accessToken && refreshToken) {
       webViewRef.current.injectJavaScript(script);
@@ -74,7 +77,9 @@ const Home = () => {
           ref={webViewRef}
           mixedContentMode="always"
           style={{width: '100%', height: '100%'}}
-          source={{uri: 'http://43.201.113.143/'}}
+          source={{
+            uri: 'http://ec2-43-201-113-143.ap-northeast-2.compute.amazonaws.com/',
+          }}
           onError={syntheticEvent => {
             const {nativeEvent} = syntheticEvent;
             console.warn('WebView error: ', nativeEvent);
