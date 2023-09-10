@@ -8,7 +8,7 @@ import {
   Linking,
   Image,
 } from 'react-native';
-import RNFS from 'react-native-fs';
+
 import axios from 'axios';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import {useNavigation} from '@react-navigation/native';
@@ -25,9 +25,10 @@ const CameraScreen = ({state}) => {
   // const accessToken = useSelector(state => state.user.access_token);
   const userNickname = useSelector(state => state.user.nickname);
 
-  const [showCamera, setShowCamera] = useState(false);
+  const [showCamera, setShowCamera] = useState(true);
   const [imageSource, setImageSource] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showLoadingMessage, setShowLoadingMessage] = useState(false);
 
   useEffect(() => {
     async function getPermission() {
@@ -52,18 +53,19 @@ const CameraScreen = ({state}) => {
   }
 
   const uploadData = async () => {
-    
-  const accessToken = await AsyncStorage.getItem("access_token");
-      let formdata = new FormData();
+    setShowLoadingMessage(true);
 
-      formdata.append('image', {
-        name: 'test.jpg',
-        type: 'image/jpeg',
-        uri: 'file://' + imageSource,
-      });
-      console.log(`file:/${imageSource}`);
-      try {
-        const response = await axios.post(
+    const accessToken = await AsyncStorage.getItem('access_token');
+    let formdata = new FormData();
+
+    formdata.append('image', {
+      name: 'test.jpg',
+      type: 'image/jpeg',
+      uri: 'file://' + imageSource,
+    });
+    console.log(`file:/${imageSource}`);
+    try {
+      const response = await axios.post(
         'http://3.36.95.105/payment/card/create/image/',
         formdata,
         {
@@ -75,17 +77,21 @@ const CameraScreen = ({state}) => {
             return data;
           },
         },
-      );  
-      
+      );
+
       console.log(response.data);
       console.log('🥹 image upload complete!', response.data);
-    
-        navigation.navigate("Payment", { enroll: true , data: response.data});
-    
-     
+      setShowLoadingMessage(false);
+      setShowSuccessMessage(true);
+
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+        navigation.navigate('Payment', {enroll: true, data: response.data});
+      }, 2000);
     } catch (error) {
       console.log('😛 Error :', error);
       console.log('😛 Error :', error.message);
+
       if (error.response && error.response.status === 401) {
         try {
           console.log('Attempting to refresh the access token...');
@@ -165,7 +171,7 @@ const CameraScreen = ({state}) => {
                 alignItems: 'center',
               }}>
               <Text style={{color: 'white', fontSize: 30, fontWeight: 'bold'}}>
-                화면에 맞춰 촬영해주세요
+                화면에 맞춰 가로로 촬영해주세요
               </Text>
             </View>
           </View>
@@ -184,21 +190,18 @@ const CameraScreen = ({state}) => {
         <>
           {imageSource !== null ? (
             <>
+              {showLoadingMessage && (
+                <View style={styles.showMessage}>
+                  <Icon name="exclamationcircle" size={50} color="#65a30d" />
+                  <Text style={styles.showMessageText}>
+                    카드 등록 중 입니다
+                  </Text>
+                </View>
+              )}
               {showSuccessMessage && (
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    zIndex: 999,
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                  }}>
+                <View style={styles.showMessage}>
                   <Icon name="checkcircle" size={50} color="#056CF2" />
-                  <Text style={{color: 'white', fontSize: 20, marginTop: 20}}>
+                  <Text style={styles.showMessageText}>
                     등록이 완료되었어요
                   </Text>
                 </View>
@@ -245,31 +248,8 @@ const CameraScreen = ({state}) => {
               </View>
             </>
           ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{justifyContent: 'center', alignItems: 'center'}}>
-                얼굴을 등록하지 않으면 서비스 이용이 불가능합니다.
-              </Text>
-              <View style={styles.backButton}>
-                <TouchableOpacity
-                  onPress={() => setShowCamera(true)}
-                  style={{
-                    backgroundColor: '#056CF2',
-                    padding: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 10,
-                    borderWidth: 2,
-                    borderColor: '#fff',
-                    width: 100,
-                  }}>
-                  <Text style={{color: 'white', fontWeight: '500'}}>확인</Text>
-                </TouchableOpacity>
-              </View>
+            <View>
+              <Text>잠시만 기다려 주세요...</Text>
             </View>
           )}
         </>
@@ -325,6 +305,23 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '80%',
+  },
+  showMessage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 999,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  showMessageText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 20,
+    marginTop: 20,
   },
 });
 
