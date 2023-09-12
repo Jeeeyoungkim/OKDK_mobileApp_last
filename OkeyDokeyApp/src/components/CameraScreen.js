@@ -1,5 +1,12 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {View, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Image,
+  Alert,
+} from 'react-native';
 import axios from 'axios';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -24,10 +31,24 @@ const CameraScreen = ({updateState}) => {
   const [showWarningMessage, setShowWaringMessage] = useState(false);
 
   useEffect(() => {
-    async function getPermission() {
+    const showAlert = async () => {
+      Alert.alert('경고', '얼굴 등록을 위해서는 카메라 권한이 필요합니다.', [
+        {
+          text: '취소',
+          onPress: () => navigation.navigate('Login'),
+          style: 'cancel',
+        },
+        {text: '확인', onPress: () => getPermission()},
+      ]);
+    };
+
+    const getPermission = async () => {
       const newCameraPermission = await Camera.requestCameraPermission();
       console.log(newCameraPermission);
-    }
+      if (newCameraPermission === 'denied') {
+        await showAlert();
+      }
+    };
     getPermission();
   }, []);
 
@@ -40,7 +61,7 @@ const CameraScreen = ({updateState}) => {
 
     try {
       const response = await axios.post(
-        'http://3.36.95.105/account/refresh/access_token/',
+        'https://www.okdkbackend.shop/payment/account/refresh/access_token/',
         body,
         {
           headers: {
@@ -85,7 +106,7 @@ const CameraScreen = ({updateState}) => {
       });
       if (updateState.update) {
         await axios.put(
-          'http://3.36.95.105/account/user/face/register/',
+          'https://www.okdkbackend.shop/account/user/face/register/',
           formdata,
           {
             headers: {
@@ -99,7 +120,7 @@ const CameraScreen = ({updateState}) => {
         );
       } else {
         await axios.post(
-          'http://3.36.95.105/account/user/face/register/',
+          'https://www.okdkbackend.shop/account/user/face/register/',
           formdata,
           {
             headers: {

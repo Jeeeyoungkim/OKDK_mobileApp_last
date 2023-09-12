@@ -2,11 +2,10 @@ import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   StyleSheet,
-  Button,
   TouchableOpacity,
   Text,
-  Linking,
   Image,
+  Alert,
 } from 'react-native';
 
 import axios from 'axios';
@@ -31,10 +30,24 @@ const CameraScreen = ({state}) => {
   const [showLoadingMessage, setShowLoadingMessage] = useState(false);
 
   useEffect(() => {
-    async function getPermission() {
+    const showAlert = async () => {
+      Alert.alert('경고', '카드 등록을 위해서는 카메라 권한이 필요합니다.', [
+        {
+          text: '취소',
+          onPress: () => navigation.navigate('Login'),
+          style: 'cancel',
+        },
+        {text: '확인', onPress: () => getPermission()},
+      ]);
+    };
+
+    const getPermission = async () => {
       const newCameraPermission = await Camera.requestCameraPermission();
       console.log(newCameraPermission);
-    }
+      if (newCameraPermission === 'denied') {
+        await showAlert();
+      }
+    };
     getPermission();
   }, []);
 
