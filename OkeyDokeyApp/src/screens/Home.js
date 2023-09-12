@@ -24,6 +24,20 @@ const Home = () => {
     });
   }, [navigation]);
 
+  useEffect(() => {
+    const checkToken = async () => {
+      const accessToken = await AsyncStorage.getItem('access_token');
+      const refreshToken = await AsyncStorage.getItem('refresh_token');
+      console.log(accessToken, refreshToken);
+
+      if (!accessToken || !refreshToken) {
+        navigation.navigate('Login');
+      }
+    };
+
+    checkToken();
+  }, []);
+
   const postMessage = async ({type, data}) => {
     const accessToken = await AsyncStorage.getItem('access_token');
     const refreshToken = await AsyncStorage.getItem('refresh_token');
@@ -60,7 +74,9 @@ const Home = () => {
 
     if (messageData.status === 'Payment') {
       console.log('네비게이션 이동 : ', messageData.status);
-      navigation.navigate('Bottom', {screen: 'Payment'});
+      navigation.navigate('Bottom', {
+        screen: 'Payment',
+      });
     }
 
     if (messageData.status === 'login') {
