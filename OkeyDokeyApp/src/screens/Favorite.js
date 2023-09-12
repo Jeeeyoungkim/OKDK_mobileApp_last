@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import WebView from 'react-native-webview';
 import {View, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 
-const Favorite = ({navigation}) => {
+const Favorite = ({route, navigation}) => {
   const webViewRef = useRef(null);
   const [key, setKey] = useState(0); // 새로운 상태 변수
 
@@ -43,7 +43,7 @@ const Favorite = ({navigation}) => {
           mixedContentMode="always"
           style={{width: '100%', height: '100%'}}
           source={{
-            uri: 'http://ec2-43-201-113-143.ap-northeast-2.compute.amazonaws.com/Favorite',
+            uri: 'https://www.okdk.shop/favorite',
           }}
           onError={syntheticEvent => {
             const {nativeEvent} = syntheticEvent;
