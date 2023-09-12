@@ -17,6 +17,12 @@ const Login = () => {
   const updateState = route.params ? route.params : false;
 
   useEffect(() => {
+    const removeAsyncStorage = async () => {
+      await AsyncStorage.removeItem('access_token');
+      await AsyncStorage.removeItem('refresh_token');
+    };
+    removeAsyncStorage();
+
     const handleBackPress = () => {
       if (!updateState) {
         return true;
@@ -42,8 +48,6 @@ const Login = () => {
 
       //로그인 성공시
       if (messageData && messageData.status === 'success') {
-        console.log('로그인 성공했니? : ', messageData.status);
-
         // AsyncStorage에 토큰 저장
         await AsyncStorage.setItem('access_token', messageData.access_token);
         await AsyncStorage.setItem('refresh_token', messageData.refresh_token);
@@ -51,6 +55,12 @@ const Login = () => {
         // Redux에 로그인 정보 저장
         handleLoginSuccess(messageData.access_token, messageData.refresh_token);
         fetchUserInfo(messageData.access_token);
+      } else {
+        // 실패시 초기 로그인 화면으로 이동
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Login'}],
+        });
       }
     } catch (error) {
       console.error('Error handling the message:', error);
