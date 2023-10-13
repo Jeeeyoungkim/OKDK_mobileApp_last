@@ -12,8 +12,10 @@
 
 <br />
 
+<p align="center">
 <img src="https://github.com/Devlants/OKDK_mobileApp_last/assets/102647933/1cc33b56-acad-49aa-81c3-259b18f1f2f3" style="width:500px;"/>
 <img src="https://github.com/Devlants/OKDK_mobileApp_last/assets/102647933/8a776fd0-717f-4dad-9672-b81dffe41e42" style="width:500px;"/>
+</p>
 
 <br />
 
@@ -71,5 +73,6 @@ APP과 매장들이 api로 연결되어 각각의 모듈에 대한 코드 변경
 | --- | --- | --- | --- | --- | --- |
 |  <a href="https://github.com/jomulagy"><img src="https://avatars.githubusercontent.com/jomulagy?s=100" width="100px;" alt=""/>         <br /><sub><b>jomulagy</a>| <a href="https://github.com/walloonam"><img src="https://avatars.githubusercontent.com/walloonam?s=100" width="100px;" alt=""/>         <br /><sub><b>walloonam</a>| <a href="https://github.com/kimyeonchul"><img src="https://avatars.githubusercontent.com/kimyeonchul?s=100" width="100px;" alt=""/>         <br /><sub><b>kimyeonchul</a>| <a href="https://github.com/master1st"><img src="https://avatars.githubusercontent.com/master1st?s=100" width="100px;" alt=""/>         <br /><sub><b>master1st</a>| <a href="https://github.com/jeeeyoungkim"><img src="https://avatars.githubusercontent.com/jeeeyoungkim?s=100" width="100px;" alt=""/>         <br /><sub><b>jeeeyoungkim</a>| <a href="https://github.com/2oooo914"><img src="https://avatars.githubusercontent.com/2oooo914?s=100" width="100px;" alt=""/>         <br /><sub><b>2oooo914</a>|
 |김지훈|임재훈|김연출|윤석현|김지영|조유진
+
 
 
