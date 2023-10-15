@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/Devlants/OKDK_mobileApp_last/assets/102647933/56262b73-1f5f-4d75-a2f4-c6c77791274c" style="width:100px; height:100px; border-radius:20%"/>
+<img src="https://github.com/Devlants/OKDK_mobileApp_last/assets/102647933/61eaa63c-3741-4049-9406-27d541b5a163" style="width:100px; height:100px; border-radius:20%"/>
     <br />
     <h1 align="center">OKDK KIOSK</h1>
     <p align="center">2023학년도 상명대학교 캡스톤 디자인</p>
