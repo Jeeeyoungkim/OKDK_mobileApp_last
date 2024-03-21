@@ -6,7 +6,7 @@
     <p align="center">
         <a href="https://play.google.com/store/apps/details?id=com.okeydokeymobile">Final Presentation</a>
         ·
-        <a href="https://drive.google.com/file/d/1J30Z5vs2Jlx8OGZ0VOXDe_OWeZuw1dia/view?usp=share_link">Google Play Store</a>
+        <a href="https://file.notion.so/f/f/81fed896-bbb8-43da-849f-bf80d81f4fcf/9dcd388c-9fac-4485-bfe4-517ddbb99987/OKDK%E1%84%8F%E1%85%B5%E1%84%8B%E1%85%A9%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3-%E1%84%87%E1%85%A1%E1%86%AF%E1%84%91%E1%85%AD.pdf?id=130a809e-95d6-42c2-af6a-249ab0419380&table=block&spaceId=81fed896-bbb8-43da-849f-bf80d81f4fcf&expirationTimestamp=1711087200000&signature=rSH8WaTFcAYA3_Ww0iO0d-GMdBVSPCRfn8DMXtSCmKs&downloadName=OKDK%E1%84%8F%E1%85%B5%E1%84%8B%E1%85%A9%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3-%E1%84%87%E1%85%A1%E1%86%AF%E1%84%91%E1%85%AD.pdf">Google Play Store</a>
     </p align="center">
 </p>
 
@@ -61,12 +61,10 @@ APP과 매장들이 api로 연결되어 각각의 모듈에 대한 코드 변경
 - navigation, chartjs-2, icons, async-storage, react-native-camera
 - Aws EC2
 
-## 🗺 아키텍쳐
-없나요?
-
 
 ## 🎥 시연 영상
-연결좀요
+[![Video Label](http://img.youtube.com/vi/'유튜브주소의id'/0.jpg)](https://youtu.be/1c2iJvYrY_w?si=_W6jt3spMMD8V5ms)
+
 
 ## 👨‍👩‍👧‍👦 팀원들
 | 팀장 / 백엔드 | 백엔드 | 프론트엔드 | 프론트엔드 | 프론트엔드 | 디자인 |
